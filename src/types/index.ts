@@ -1,17 +1,16 @@
-export type CarCondition = 'Excellent' | 'Good' | 'Fair' | 'Poor' | 'Parts Only';
-export type TransmissionType = 'Manual' | 'Automatic' | 'Semi-Automatic';
-export type FuelType = 'Petrol' | 'Diesel' | 'Electric' | 'Hybrid' | 'Other';
-export type BodyStyle =
-  | 'Sedan'
-  | 'Coupe'
-  | 'Convertible'
-  | 'Roadster'
-  | 'Station Wagon'
-  | 'Pickup Truck'
-  | 'SUV'
-  | 'Van'
-  | 'Hatchback'
-  | 'Other';
+export type User = {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  role: 'buyer' | 'seller' | 'both';
+  createdAt: number;
+};
+
+export type AuthState = {
+  user: User | null;
+  isLoggedIn: boolean;
+};
 
 export type CarListing = {
   id: string;
@@ -20,10 +19,10 @@ export type CarListing = {
   year: number;
   price: number;
   mileage: number;
-  condition: CarCondition;
-  transmission: TransmissionType;
-  fuelType: FuelType;
-  bodyStyle: BodyStyle;
+  condition: 'Excellent' | 'Good' | 'Fair' | 'Poor' | 'Parts Only';
+  transmission: 'Manual' | 'Automatic' | 'Semi-Automatic';
+  fuelType: 'Petrol' | 'Diesel' | 'Electric' | 'Hybrid' | 'Other';
+  bodyStyle: 'Sedan' | 'Coupe' | 'Convertible' | 'Roadster' | 'Station Wagon' | 'Pickup Truck' | 'SUV' | 'Van' | 'Hatchback' | 'Other';
   color: string;
   engineSize: string;
   horsepower: string;
@@ -37,6 +36,15 @@ export type CarListing = {
   features: string[];
   createdAt: number;
   isAuction: boolean;
+};
+
+export type Bid = {
+  id: string;
+  auctionId: string;
+  bidderId: string;
+  bidderUsername: string;
+  amount: number;
+  timestamp: number;
 };
 
 export type AuctionListing = {
@@ -53,29 +61,6 @@ export type AuctionListing = {
   durationHours: number;
   startTime: number;
   endTime: number;
-  status: 'upcoming' | 'live' | 'ended' | 'sold' | 'no_sale';
+  status: 'live' | 'ended' | 'cancelled';
   bids: Bid[];
-};
-
-export type Bid = {
-  id: string;
-  auctionId: string;
-  bidderId: string;
-  bidderUsername: string;
-  amount: number;
-  timestamp: number;
-};
-
-export type User = {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  role: 'buyer' | 'seller' | 'both';
-  createdAt: number;
-};
-
-export type AuthState = {
-  user: User | null;
-  isLoggedIn: boolean;
 };
