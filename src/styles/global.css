@@ -2,26 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @layer base {
   body {
     @apply bg-vccp-cream text-vccp-dark;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
 @layer components {
   .vccp-card {
-    @apply bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-orange-100;
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-orange-100/60;
+    transform: translateZ(0);
+  }
+  .vccp-card:hover {
+    transform: translateY(-3px);
   }
   .vccp-btn-primary {
-    @apply bg-vccp-orange text-white font-bold px-4 py-2 rounded-lg hover:bg-vccp-orange-dark transition-colors;
+    @apply bg-gradient-to-r from-vccp-orange to-vccp-orange-light text-white font-bold px-5 py-2.5 rounded-xl hover:from-vccp-orange-dark hover:to-vccp-orange transition-all duration-200 shadow-md hover:shadow-lg;
   }
   .vccp-btn-secondary {
-    @apply border-2 border-vccp-orange text-vccp-orange font-bold px-4 py-2 rounded-lg hover:bg-vccp-orange hover:text-white transition-colors;
+    @apply border-2 border-vccp-orange text-vccp-orange font-bold px-5 py-2.5 rounded-xl hover:bg-vccp-orange hover:text-white transition-all duration-200;
   }
   .vccp-input {
-    @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-vccp-orange transition-colors;
+    @apply w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-vccp-orange focus:ring-2 focus:ring-vccp-orange/20 transition-all bg-white shadow-sm;
   }
   .vccp-label {
-    @apply block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1;
+    @apply block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1.5;
+  }
+  .vccp-glass {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .vccp-section-title {
+    @apply text-3xl font-bold text-vccp-dark;
+    font-family: 'Playfair Display', serif;
   }
 }

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Gavel, Clock, TrendingUp } from 'lucide-react';
+import { Gavel, Clock, TrendingUp, Flame } from 'lucide-react';
 import type { AuctionListing } from '@/types';
 import clsx from 'clsx';
 
@@ -26,53 +26,100 @@ function useCountdown(endTime: number) {
 export default function AuctionCard({ auction }: AuctionCardProps) {
   const time = useCountdown(auction.endTime);
   const isLive = auction.status === 'live' && !time.expired;
+  const endingSoon = isLive && time.h === 0 && time.m < 10;
   const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
-    <Link to={`/auctions/${auction.id}`} className="block">
-      <div className={clsx('vccp-card', isLive && 'border-2 border-vccp-orange')}>
-        <div className="h-44 bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center relative">
+    <Link to={`/auctions/${auction.id}`} className="block group">
+      <div
+        className={clsx(
+          'vccp-card',
+          isLive && 'ring-2 ring-vccp-orange/60 ring-offset-1',
+          endingSoon && 'ring-red-500/70'
+        )}
+      >
+        {/* Image */}
+        <div className="relative h-48 bg-gradient-to-br from-gray-900 to-gray-700 overflow-hidden">
           {auction.car.images.length > 0 ? (
-            <img src={auction.car.images[0]} alt={`${auction.car.year} ${auction.car.make}`} className="w-full h-full object-cover" />
+            <img
+              src={auction.car.images[0]}
+              alt={`${auction.car.year} ${auction.car.make}`}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
           ) : (
-            <svg viewBox="0 0 120 60" className="w-28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 40 L20 20 L40 15 L80 15 L100 20 L110 40 L10 40Z" fill="#E85D04" opacity="0.4" stroke="#E85D04" strokeWidth="2" />
-              <circle cx="30" cy="42" r="8" fill="#1A1A1A" stroke="#E85D04" strokeWidth="2" />
-              <circle cx="30" cy="42" r="4" fill="#E85D04" />
-              <circle cx="90" cy="42" r="8" fill="#1A1A1A" stroke="#E85D04" strokeWidth="2" />
-              <circle cx="90" cy="42" r="4" fill="#E85D04" />
-            </svg>
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="absolute inset-0 bg-hero-pattern opacity-20" />
+              <svg viewBox="0 0 120 60" className="w-32 relative z-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 42 L18 20 L36 14 L84 14 L102 20 L112 42 Z" fill="#E85D04" opacity="0.3" stroke="#E85D04" strokeWidth="1.5" />
+                <circle cx="28" cy="46" r="9" fill="#111" stroke="#E85D04" strokeWidth="2" />
+                <circle cx="28" cy="46" r="4" fill="#E85D04" />
+                <circle cx="92" cy="46" r="9" fill="#111" stroke="#E85D04" strokeWidth="2" />
+                <circle cx="92" cy="46" r="4" fill="#E85D04" />
+              </svg>
+            </div>
           )}
-          <div className="absolute top-2 left-2">
-            <span className={clsx('text-xs font-bold px-2 py-1 rounded-full', isLive ? 'bg-vccp-orange text-white animate-pulse' : 'bg-gray-500 text-white')}>
-              {isLive ? '● LIVE' : 'ENDED'}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+          {/* Status badge */}
+          <div className="absolute top-3 left-3">
+            {isLive ? (
+              <span className="flex items-center gap-1 bg-vccp-orange text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-lg">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                LIVE
+              </span>
+            ) : (
+              <span className="bg-gray-600/80 backdrop-blur-sm text-gray-200 text-xs font-bold px-2.5 py-1 rounded-full">
+                ENDED
+              </span>
+            )}
+          </div>
+
+          {/* Bids count */}
+          <div className="absolute top-3 right-3">
+            <span className="flex items-center gap-1 bg-black/50 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full">
+              <Gavel size={10} /> {auction.bids.length} bids
             </span>
           </div>
+
+          {/* Timer overlay at bottom */}
+          {isLive && (
+            <div className="absolute bottom-3 right-3">
+              <span className={clsx(
+                'flex items-center gap-1 text-xs font-mono font-bold px-2.5 py-1 rounded-full backdrop-blur-sm',
+                endingSoon
+                  ? 'bg-red-500/90 text-white'
+                  : 'bg-black/60 text-vccp-orange'
+              )}>
+                <Clock size={10} />
+                {pad(time.h)}:{pad(time.m)}:{pad(time.s)}
+              </span>
+            </div>
+          )}
         </div>
+
+        {/* Info */}
         <div className="p-4">
-          <h3 className="font-bold text-gray-900 text-sm mb-1">
+          <h3 className="font-bold text-gray-900 text-sm mb-2 group-hover:text-vccp-orange transition-colors">
             {auction.car.year} {auction.car.make} {auction.car.model}
           </h3>
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-end justify-between">
             <div>
-              <p className="text-xs text-gray-500 flex items-center gap-1"><TrendingUp size={11} /> Highest Bid</p>
-              <p className="text-vccp-orange font-bold text-xl">${auction.currentBid.toLocaleString()}</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider flex items-center gap-1 mb-0.5">
+                <TrendingUp size={9} /> Highest Bid
+              </p>
+              <p className="text-vccp-orange font-black text-2xl leading-none">
+                ${auction.currentBid.toLocaleString()}
+              </p>
             </div>
-            <div className="text-right">
-              <p className="text-xs text-gray-500 flex items-center gap-1 justify-end"><Gavel size={11} /> {auction.bids.length} bids</p>
-              {isLive ? (
-                <div className="flex items-center gap-1 text-vccp-orange font-mono font-bold text-sm">
-                  <Clock size={12} />
-                  {pad(time.h)}:{pad(time.m)}:{pad(time.s)}
-                </div>
-              ) : (
-                <span className="text-gray-400 text-xs">Auction Ended</span>
-              )}
-            </div>
+            {endingSoon && (
+              <div className="flex items-center gap-1 text-red-500 text-xs font-bold animate-pulse">
+                <Flame size={13} /> Ending Soon!
+              </div>
+            )}
+            {!isLive && (
+              <span className="text-gray-400 text-xs font-medium bg-gray-100 px-2.5 py-1 rounded-full">Ended</span>
+            )}
           </div>
-          {isLive && time.h === 0 && time.m < 10 && (
-            <p className="text-xs text-vccp-orange font-semibold">⚡ Ending soon!</p>
-          )}
         </div>
       </div>
     </Link>

@@ -51,98 +51,118 @@ export default function SearchFilters({ onFilter, initialFilters }: SearchFilter
     onFilter(defaultFilters);
   }
 
+  const activeFilterCount = Object.entries(filters).filter(([k, v]) => k !== 'query' && v !== '').length;
+
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 mb-6 border border-gray-200">
-      <div className="flex gap-2 mb-3">
+    <div className="bg-white rounded-2xl shadow-card border border-gray-100 p-5 mb-6">
+      {/* Search row */}
+      <div className="flex gap-3 mb-1">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Search make, model, year..."
-            className="vccp-input pl-9"
+            placeholder="Search make, model, year, or keyword..."
+            className="vccp-input pl-11 text-sm"
             value={filters.query}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => update('query', e.target.value)}
           />
         </div>
         <button
           onClick={() => setExpanded(!expanded)}
-          className={clsx('flex items-center gap-1 px-3 py-2 rounded border text-sm font-medium transition-colors',
-            expanded ? 'bg-vccp-gold text-vccp-dark border-vccp-gold' : 'border-gray-300 text-gray-600 hover:border-vccp-gold'
+          className={clsx(
+            'flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all border',
+            expanded
+              ? 'bg-vccp-orange text-white border-vccp-orange shadow-md'
+              : 'border-gray-200 text-gray-600 hover:border-vccp-orange hover:text-vccp-orange bg-white'
           )}
         >
-          <SlidersHorizontal size={14} /> Filters
+          <SlidersHorizontal size={14} />
+          Filters
+          {activeFilterCount > 0 && (
+            <span className={clsx(
+              'text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center',
+              expanded ? 'bg-white text-vccp-orange' : 'bg-vccp-orange text-white'
+            )}>
+              {activeFilterCount}
+            </span>
+          )}
         </button>
-        <button onClick={reset} className="text-gray-400 hover:text-red-500 transition-colors px-2">
-          <X size={16} />
-        </button>
+        {(filters.query || activeFilterCount > 0) && (
+          <button
+            onClick={reset}
+            className="p-2.5 rounded-xl border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-300 transition-all"
+          >
+            <X size={15} />
+          </button>
+        )}
       </div>
 
       {expanded && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pt-3 border-t border-gray-100">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pt-4 mt-3 border-t border-gray-100">
           <div>
             <label className="vccp-label">Make</label>
-            <select className="vccp-input" value={filters.make} onChange={(e: any) => update('make', e.target.value)}>
+            <select className="vccp-input" value={filters.make} onChange={(e) => update('make', e.target.value)}>
               <option value="">All Makes</option>
               {MAKES.map((m) => <option key={m} value={m}>{m}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Year From</label>
-            <select className="vccp-input" value={filters.yearFrom} onChange={(e: any) => update('yearFrom', e.target.value)}>
+            <select className="vccp-input" value={filters.yearFrom} onChange={(e) => update('yearFrom', e.target.value)}>
               <option value="">Any</option>
               {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Year To</label>
-            <select className="vccp-input" value={filters.yearTo} onChange={(e: any) => update('yearTo', e.target.value)}>
+            <select className="vccp-input" value={filters.yearTo} onChange={(e) => update('yearTo', e.target.value)}>
               <option value="">Any</option>
               {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Min Price ($)</label>
-            <input type="number" className="vccp-input" placeholder="0" value={filters.priceMin} onChange={(e: any) => update('priceMin', e.target.value)} />
+            <input type="number" className="vccp-input" placeholder="0" value={filters.priceMin} onChange={(e) => update('priceMin', e.target.value)} />
           </div>
           <div>
             <label className="vccp-label">Max Price ($)</label>
-            <input type="number" className="vccp-input" placeholder="Any" value={filters.priceMax} onChange={(e: any) => update('priceMax', e.target.value)} />
+            <input type="number" className="vccp-input" placeholder="Any" value={filters.priceMax} onChange={(e) => update('priceMax', e.target.value)} />
           </div>
           <div>
             <label className="vccp-label">Condition</label>
-            <select className="vccp-input" value={filters.condition} onChange={(e: any) => update('condition', e.target.value)}>
+            <select className="vccp-input" value={filters.condition} onChange={(e) => update('condition', e.target.value)}>
               <option value="">Any</option>
               {['Excellent','Good','Fair','Poor','Parts Only'].map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Transmission</label>
-            <select className="vccp-input" value={filters.transmission} onChange={(e: any) => update('transmission', e.target.value)}>
+            <select className="vccp-input" value={filters.transmission} onChange={(e) => update('transmission', e.target.value)}>
               <option value="">Any</option>
               {['Manual','Automatic','Semi-Automatic'].map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Body Style</label>
-            <select className="vccp-input" value={filters.bodyStyle} onChange={(e: any) => update('bodyStyle', e.target.value)}>
+            <select className="vccp-input" value={filters.bodyStyle} onChange={(e) => update('bodyStyle', e.target.value)}>
               <option value="">Any</option>
               {['Sedan','Coupe','Convertible','Roadster','Station Wagon','Pickup Truck','SUV','Van','Hatchback','Other'].map((b) => <option key={b} value={b}>{b}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Fuel Type</label>
-            <select className="vccp-input" value={filters.fuelType} onChange={(e: any) => update('fuelType', e.target.value)}>
+            <select className="vccp-input" value={filters.fuelType} onChange={(e) => update('fuelType', e.target.value)}>
               <option value="">Any</option>
               {['Petrol','Diesel','Electric','Hybrid','Other'].map((f) => <option key={f} value={f}>{f}</option>)}
             </select>
           </div>
           <div>
             <label className="vccp-label">Color</label>
-            <input type="text" className="vccp-input" placeholder="Any color" value={filters.color} onChange={(e: any) => update('color', e.target.value)} />
+            <input type="text" className="vccp-input" placeholder="Any color" value={filters.color} onChange={(e) => update('color', e.target.value)} />
           </div>
           <div>
             <label className="vccp-label">Max Mileage</label>
-            <input type="number" className="vccp-input" placeholder="Any" value={filters.mileageMax} onChange={(e: any) => update('mileageMax', e.target.value)} />
+            <input type="number" className="vccp-input" placeholder="Any" value={filters.mileageMax} onChange={(e) => update('mileageMax', e.target.value)} />
           </div>
         </div>
       )}
