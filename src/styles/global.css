@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-vccp-cream text-vccp-dark font-sans;
+  }
+}
+
+@layer components {
+  .vccp-btn-primary {
+    @apply bg-vccp-gold text-vccp-dark font-bold px-6 py-2 rounded hover:bg-yellow-500 transition-colors;
+  }
+  .vccp-btn-secondary {
+    @apply bg-vccp-charcoal text-white font-bold px-6 py-2 rounded hover:bg-gray-700 transition-colors;
+  }
+  .vccp-card {
+    @apply bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow;
+  }
+  .vccp-input {
+    @apply w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-vccp-gold focus:ring-1 focus:ring-vccp-gold;
+  }
+  .vccp-label {
+    @apply block text-sm font-semibold text-gray-700 mb-1;
+  }
+}
