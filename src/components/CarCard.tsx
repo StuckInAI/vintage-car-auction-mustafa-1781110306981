@@ -22,12 +22,12 @@ export default function CarCard({ car }: CarCardProps) {
           ) : (
             <div className="text-center">
               <svg viewBox="0 0 120 60" className="w-32 mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 40 L20 20 L40 15 L80 15 L100 20 L110 40 L10 40Z" fill="#C9A84C" opacity="0.3" stroke="#C9A84C" strokeWidth="2" />
-                <circle cx="30" cy="42" r="8" fill="#1A1A1A" stroke="#C9A84C" strokeWidth="2" />
-                <circle cx="30" cy="42" r="4" fill="#C9A84C" />
-                <circle cx="90" cy="42" r="8" fill="#1A1A1A" stroke="#C9A84C" strokeWidth="2" />
-                <circle cx="90" cy="42" r="4" fill="#C9A84C" />
-                <rect x="35" y="20" width="50" height="18" rx="2" fill="#C9A84C" opacity="0.4" />
+                <path d="M10 40 L20 20 L40 15 L80 15 L100 20 L110 40 L10 40Z" fill="#E85D04" opacity="0.3" stroke="#E85D04" strokeWidth="2" />
+                <circle cx="30" cy="42" r="8" fill="#1A1A1A" stroke="#E85D04" strokeWidth="2" />
+                <circle cx="30" cy="42" r="4" fill="#E85D04" />
+                <circle cx="90" cy="42" r="8" fill="#1A1A1A" stroke="#E85D04" strokeWidth="2" />
+                <circle cx="90" cy="42" r="4" fill="#E85D04" />
+                <rect x="35" y="20" width="50" height="18" rx="2" fill="#E85D04" opacity="0.4" />
               </svg>
               <p className="text-gray-400 text-xs mt-2">No Photo</p>
             </div>
@@ -41,17 +41,17 @@ export default function CarCard({ car }: CarCardProps) {
             <h3 className="font-bold text-gray-900 text-sm leading-tight">
               {car.year} {car.make} {car.model}
             </h3>
-            <Star size={14} className="text-vccp-gold flex-shrink-0 mt-0.5" />
+            <Star size={14} className="text-vccp-orange flex-shrink-0 mt-0.5" />
           </div>
-          <p className="text-vccp-gold font-bold text-lg mb-2">${car.price.toLocaleString()}</p>
+          <p className="text-vccp-orange font-bold text-lg mb-2">${car.price.toLocaleString()}</p>
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500">
             <span className="flex items-center gap-1"><Gauge size={12} />{car.mileage.toLocaleString()} mi</span>
             <span className="flex items-center gap-1"><Settings size={12} />{car.transmission}</span>
             <span className="flex items-center gap-1"><MapPin size={12} />{car.location}</span>
           </div>
           <div className="mt-2 flex flex-wrap gap-1">
-            <span className="text-xs bg-vccp-cream text-vccp-dark px-2 py-0.5 rounded border border-gray-200">{car.bodyStyle}</span>
-            <span className="text-xs bg-vccp-cream text-vccp-dark px-2 py-0.5 rounded border border-gray-200">{car.color}</span>
+            <span className="text-xs bg-orange-50 text-vccp-orange-dark px-2 py-0.5 rounded border border-orange-200">{car.bodyStyle}</span>
+            <span className="text-xs bg-orange-50 text-vccp-orange-dark px-2 py-0.5 rounded border border-orange-200">{car.color}</span>
           </div>
         </div>
       </div>

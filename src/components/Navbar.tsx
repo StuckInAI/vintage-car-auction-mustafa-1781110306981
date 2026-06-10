@@ -19,27 +19,27 @@ export default function Navbar({ auth, onLogout }: NavbarProps) {
   }
 
   return (
-    <nav className="bg-vccp-dark border-b-2 border-vccp-gold sticky top-0 z-50">
+    <nav className="bg-vccp-dark border-b-4 border-vccp-orange sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         <Logo size="sm" />
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <Link to="/" className="text-gray-300 hover:text-vccp-gold transition-colors flex items-center gap-1">
+          <Link to="/" className="text-gray-300 hover:text-vccp-orange transition-colors flex items-center gap-1">
             <Search size={14} /> Browse
           </Link>
-          <Link to="/listings" className="text-gray-300 hover:text-vccp-gold transition-colors flex items-center gap-1">
+          <Link to="/listings" className="text-gray-300 hover:text-vccp-orange transition-colors flex items-center gap-1">
             <Car size={14} /> For Sale
           </Link>
-          <Link to="/auctions" className="text-gray-300 hover:text-vccp-gold transition-colors flex items-center gap-1">
+          <Link to="/auctions" className="text-gray-300 hover:text-vccp-orange transition-colors flex items-center gap-1">
             <Gavel size={14} /> Auctions
           </Link>
-          <Link to="/sell" className="text-gray-300 hover:text-vccp-gold transition-colors flex items-center gap-1">
+          <Link to="/sell" className="text-gray-300 hover:text-vccp-orange transition-colors flex items-center gap-1">
             <Plus size={14} /> Sell
           </Link>
         </div>
         <div className="hidden md:flex items-center gap-3">
           {auth.isLoggedIn ? (
             <>
-              <span className="text-vccp-gold text-sm font-semibold flex items-center gap-1">
+              <span className="text-vccp-orange text-sm font-semibold flex items-center gap-1">
                 <User size={14} /> {auth.user?.username}
               </span>
               <button
@@ -51,12 +51,12 @@ export default function Navbar({ auth, onLogout }: NavbarProps) {
             </>
           ) : (
             <>
-              <Link to="/auth/login" className="text-gray-300 hover:text-vccp-gold text-sm transition-colors">
+              <Link to="/auth/login" className="text-gray-300 hover:text-vccp-orange text-sm transition-colors">
                 Login
               </Link>
               <Link
                 to="/auth/register"
-                className="bg-vccp-gold text-vccp-dark text-sm font-bold px-4 py-1.5 rounded hover:bg-yellow-500 transition-colors"
+                className="bg-vccp-orange text-white text-sm font-bold px-4 py-1.5 rounded hover:bg-vccp-orange-dark transition-colors"
               >
                 Register
               </Link>
@@ -72,18 +72,18 @@ export default function Navbar({ auth, onLogout }: NavbarProps) {
       </div>
       {open && (
         <div className="md:hidden bg-vccp-charcoal px-4 pb-4 flex flex-col gap-3 text-sm">
-          <Link to="/" className="text-gray-300 hover:text-vccp-gold py-1" onClick={() => setOpen(false)}>Browse</Link>
-          <Link to="/listings" className="text-gray-300 hover:text-vccp-gold py-1" onClick={() => setOpen(false)}>For Sale</Link>
-          <Link to="/auctions" className="text-gray-300 hover:text-vccp-gold py-1" onClick={() => setOpen(false)}>Auctions</Link>
-          <Link to="/sell" className="text-gray-300 hover:text-vccp-gold py-1" onClick={() => setOpen(false)}>Sell a Car</Link>
+          <Link to="/" className="text-gray-300 hover:text-vccp-orange py-1" onClick={() => setOpen(false)}>Browse</Link>
+          <Link to="/listings" className="text-gray-300 hover:text-vccp-orange py-1" onClick={() => setOpen(false)}>For Sale</Link>
+          <Link to="/auctions" className="text-gray-300 hover:text-vccp-orange py-1" onClick={() => setOpen(false)}>Auctions</Link>
+          <Link to="/sell" className="text-gray-300 hover:text-vccp-orange py-1" onClick={() => setOpen(false)}>Sell a Car</Link>
           {auth.isLoggedIn ? (
             <button onClick={() => { handleLogout(); setOpen(false); }} className="text-red-400 text-left py-1">
               Logout ({auth.user?.username})
             </button>
           ) : (
             <>
-              <Link to="/auth/login" className="text-gray-300 hover:text-vccp-gold py-1" onClick={() => setOpen(false)}>Login</Link>
-              <Link to="/auth/register" className="text-vccp-gold py-1" onClick={() => setOpen(false)}>Register</Link>
+              <Link to="/auth/login" className="text-gray-300 hover:text-vccp-orange py-1" onClick={() => setOpen(false)}>Login</Link>
+              <Link to="/auth/register" className="text-vccp-orange py-1" onClick={() => setOpen(false)}>Register</Link>
             </>
           )}
         </div>

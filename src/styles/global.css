@@ -10,16 +10,16 @@
 
 @layer components {
   .vccp-card {
-    @apply bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-200;
+    @apply bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-orange-100;
   }
   .vccp-btn-primary {
-    @apply bg-vccp-gold text-vccp-dark font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors;
+    @apply bg-vccp-orange text-white font-bold px-4 py-2 rounded-lg hover:bg-vccp-orange-dark transition-colors;
   }
   .vccp-btn-secondary {
-    @apply border-2 border-vccp-gold text-vccp-dark font-bold px-4 py-2 rounded-lg hover:bg-vccp-gold transition-colors;
+    @apply border-2 border-vccp-orange text-vccp-orange font-bold px-4 py-2 rounded-lg hover:bg-vccp-orange hover:text-white transition-colors;
   }
   .vccp-input {
-    @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-vccp-gold transition-colors;
+    @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-vccp-orange transition-colors;
   }
   .vccp-label {
     @apply block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1;

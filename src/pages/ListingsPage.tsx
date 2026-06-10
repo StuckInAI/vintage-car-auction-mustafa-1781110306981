@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchFilters, { type Filters } from '@/components/SearchFilters';
 import CarCard from '@/components/CarCard';
+import MakeLogo from '@/components/MakeLogo';
 import type { CarListing } from '@/types';
 import { Grid, List, SortAsc } from 'lucide-react';
 import clsx from 'clsx';
@@ -75,13 +76,13 @@ export default function ListingsPage({ listings }: ListingsPageProps) {
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar */}
-        <aside className="lg:w-56 flex-shrink-0">
+        <aside className="lg:w-60 flex-shrink-0">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sticky top-20">
             <h3 className="font-bold text-sm text-gray-700 mb-3 uppercase tracking-wider">Browse by Make</h3>
             <ul className="space-y-1 text-sm">
               <li>
                 <button
-                  className={clsx('w-full text-left px-2 py-1 rounded transition-colors', !filters.make ? 'bg-vccp-gold text-vccp-dark font-semibold' : 'text-gray-600 hover:bg-gray-50')}
+                  className={clsx('w-full text-left px-2 py-1 rounded transition-colors', !filters.make ? 'bg-vccp-orange text-white font-semibold' : 'text-gray-600 hover:bg-gray-50')}
                   onClick={() => setFilters((f) => ({ ...f, make: '' }))}
                 >
                   All Makes
@@ -90,11 +91,14 @@ export default function ListingsPage({ listings }: ListingsPageProps) {
               {byMake.map(([make, count]) => (
                 <li key={make}>
                   <button
-                    className={clsx('w-full text-left px-2 py-1 rounded transition-colors flex justify-between', filters.make === make ? 'bg-vccp-gold text-vccp-dark font-semibold' : 'text-gray-600 hover:bg-gray-50')}
+                    className={clsx('w-full text-left px-2 py-1.5 rounded transition-colors flex items-center justify-between gap-2', filters.make === make ? 'bg-vccp-orange text-white font-semibold' : 'text-gray-600 hover:bg-orange-50')}
                     onClick={() => setFilters((f) => ({ ...f, make }))}
                   >
-                    <span>{make}</span>
-                    <span className="text-xs opacity-60">{count}</span>
+                    <span className="flex items-center gap-2">
+                      <MakeLogo make={make} className="w-6 h-6 flex-shrink-0" />
+                      <span>{make}</span>
+                    </span>
+                    <span className={clsx('text-xs rounded-full px-1.5 py-0.5', filters.make === make ? 'bg-white text-vccp-orange' : 'bg-gray-100 text-gray-500')}>{count}</span>
                   </button>
                 </li>
               ))}
@@ -110,9 +114,9 @@ export default function ListingsPage({ listings }: ListingsPageProps) {
             <div className="flex items-center gap-2">
               <SortAsc size={16} className="text-gray-400" />
               <select
-                className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:border-vccp-gold"
+                className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:border-vccp-orange"
                 value={sort}
-                onChange={(e: any) => setSort(e.target.value as SortKey)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSort(e.target.value as SortKey)}
               >
                 <option value="newest">Newest First</option>
                 <option value="price_asc">Price: Low to High</option>
@@ -123,8 +127,8 @@ export default function ListingsPage({ listings }: ListingsPageProps) {
               </select>
             </div>
             <div className="flex gap-1">
-              <button onClick={() => setView('grid')} className={clsx('p-1.5 rounded', view === 'grid' ? 'bg-vccp-gold text-vccp-dark' : 'text-gray-400 hover:bg-gray-100')}><Grid size={16} /></button>
-              <button onClick={() => setView('list')} className={clsx('p-1.5 rounded', view === 'list' ? 'bg-vccp-gold text-vccp-dark' : 'text-gray-400 hover:bg-gray-100')}><List size={16} /></button>
+              <button onClick={() => setView('grid')} className={clsx('p-1.5 rounded', view === 'grid' ? 'bg-vccp-orange text-white' : 'text-gray-400 hover:bg-gray-100')}><Grid size={16} /></button>
+              <button onClick={() => setView('list')} className={clsx('p-1.5 rounded', view === 'list' ? 'bg-vccp-orange text-white' : 'text-gray-400 hover:bg-gray-100')}><List size={16} /></button>
             </div>
           </div>
 
@@ -153,7 +157,7 @@ export default function ListingsPage({ listings }: ListingsPageProps) {
 
 function ListRow({ car }: { car: CarListing }) {
   return (
-    <a href={`/listings/${car.id}`} className="bg-white rounded-xl border border-gray-200 flex gap-4 p-4 hover:shadow-md transition-shadow">
+    <a href={`/listings/${car.id}`} className="bg-white rounded-xl border border-gray-200 flex gap-4 p-4 hover:shadow-md transition-shadow hover:border-vccp-orange">
       <div className="w-24 h-20 bg-gradient-to-br from-gray-700 to-gray-500 rounded-lg flex-shrink-0 flex items-center justify-center">
         {car.images.length > 0 ? (
           <img src={car.images[0]} alt="car" className="w-full h-full object-cover rounded-lg" />
@@ -163,7 +167,7 @@ function ListRow({ car }: { car: CarListing }) {
       </div>
       <div className="flex-1 min-w-0">
         <p className="font-bold text-gray-900">{car.year} {car.make} {car.model}</p>
-        <p className="text-vccp-gold font-bold text-lg">${car.price.toLocaleString()}</p>
+        <p className="text-vccp-orange font-bold text-lg">${car.price.toLocaleString()}</p>
         <p className="text-xs text-gray-500">{car.mileage.toLocaleString()} mi · {car.transmission} · {car.condition} · {car.location}</p>
       </div>
     </a>

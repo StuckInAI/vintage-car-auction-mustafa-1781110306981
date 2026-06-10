@@ -8,9 +8,12 @@ export default {
     extend: {
       colors: {
         'vccp-gold': '#C9A84C',
+        'vccp-orange': '#E85D04',
+        'vccp-orange-light': '#FF7A2F',
+        'vccp-orange-dark': '#C44D00',
         'vccp-dark': '#1A1A1A',
         'vccp-charcoal': '#2D2D2D',
-        'vccp-cream': '#F5F0E8',
+        'vccp-cream': '#FFF5EE',
       },
       fontFamily: {
         serif: ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
